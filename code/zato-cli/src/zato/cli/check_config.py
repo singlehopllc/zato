@@ -77,7 +77,9 @@ class CheckConfig(ManageCommand):
 
         self.on_server_check_sql_odb(cm, server_conf, repo_dir)
         self.on_server_check_kvdb(cm, server_conf)
-        self.on_server_check_stale_unix_socket()
+
+        if getattr(args, 'check_stale_server_sockets', True):
+            self.on_server_check_stale_unix_socket()
 
     def _on_lb(self, *ignored_args, **ignored_kwargs):
         self.logger.info('This command works with servers only')
