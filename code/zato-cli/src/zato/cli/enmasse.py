@@ -37,7 +37,7 @@ from zato.cli.check_config import CheckConfig
 from zato.client import AnyServiceInvoker
 from zato.common.crypto import CryptoManager
 from zato.common.odb.model import ConnDefAMQP, ConnDefWMQ, HTTPBasicAuth, \
-     HTTPSOAP, OAuth, SecurityBase, Server, Service, TechnicalAccount, \
+     HTTPSOAP, NTLM, OAuth, SecurityBase, Server, Service, TechnicalAccount, \
      to_json, WSSDefinition
 from zato.common.util import get_config
 from zato.server.service import ForceType
@@ -57,6 +57,7 @@ from zato.server.service.internal.outgoing import sql as outgoing_sql_mod
 from zato.server.service.internal.outgoing import zmq as outgoing_zmq_mod
 from zato.server.service.internal import scheduler as scheduler_mod
 from zato.server.service.internal.security import basic_auth as sec_basic_auth_mod
+from zato.server.service.internal.security import ntlm as sec_ntlm_mod
 from zato.server.service.internal.security import oauth as sec_oauth_mod
 from zato.server.service.internal.security import tech_account as sec_tech_account_mod
 from zato.server.service.internal.security import wss as sec_wss_mod
@@ -502,6 +503,9 @@ class EnMasse(ManageCommand):
         basic_auth = self.client.odb_session.query(HTTPBasicAuth).\
             filter(HTTPBasicAuth.cluster_id == self.client.cluster_id)
 
+        ntlm = self.client.odb_session.query(NTLM).\
+            filter(NTLM.cluster_id == self.client.cluster_id)
+
         oauth = self.client.odb_session.query(OAuth).\
             filter(OAuth.cluster_id == self.client.cluster_id)
 
@@ -511,7 +515,7 @@ class EnMasse(ManageCommand):
         wss = self.client.odb_session.query(WSSDefinition).\
             filter(WSSDefinition.cluster_id == self.client.cluster_id)
 
-        for query in(basic_auth, oauth, tech_acc, wss):
+        for query in(basic_auth, ntlm, oauth, tech_acc, wss):
             for item in query.all():
                 name = item.name.lower()
                 if not 'zato' in name and name not in('admin.invoke', 'pubapi'):
@@ -707,6 +711,7 @@ class EnMasse(ManageCommand):
 
         def_sec_services = {
             'basic_auth':sec_basic_auth_mod.Create,
+            'ntlm':sec_ntlm_mod.Create,
             'oauth':sec_oauth_mod.Create,
             'tech_acc':sec_tech_account_mod.Create,
             'wss':sec_wss_mod.Create,
@@ -934,6 +939,7 @@ class EnMasse(ManageCommand):
 
         def_sec_info = {
             'basic_auth':ImportInfo(sec_basic_auth_mod, True),
+            'ntlm':ImportInfo(sec_ntlm_mod, True),
             'oauth':ImportInfo(sec_oauth_mod, True),
             'tech_acc':ImportInfo(sec_tech_account_mod, True),
             'wss':ImportInfo(sec_wss_mod, True),
