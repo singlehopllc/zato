@@ -44,6 +44,20 @@ set -e
 export ZATO_CLI_DONT_SHOW_OUTPUT=1
 
 {script_dir}
+
+if [[ "$1" = "--delete-sockets" ]]
+then
+  echo Deleting sockets
+
+  rm -f $BASE_DIR/server1/config/zdaemon/server-*.sock
+  rm -f $BASE_DIR/server2/config/zdaemon/server-*.sock
+  rm -f $BASE_DIR/load-balancer/haproxy-stat.sock
+  rm -f $BASE_DIR/load-balancer/config/zdaemon/lb-agent.sock
+  rm -f $BASE_DIR/web-admin/config/zdaemon/web-admin.sock
+
+  echo Sockets deleted
+fi
+
 ZATO_BIN={zato_bin}
 
 echo Starting the Zato quickstart environment
