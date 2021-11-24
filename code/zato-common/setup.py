@@ -47,7 +47,7 @@ setup(
           'pyzmq-static==2.2',
           'redis==2.9.1',
           'springpython==1.3.0RC1',
-          'urllib3==1.5',
+          'urllib3==1.26.5',
           ],
       
       keywords=('soa eai esb middleware messaging queueing asynchronous integration performance http zeromq framework events agile broker messaging server jms enterprise python middleware clustering amqp nosql websphere mq wmq mqseries ibm amqp zmq'),
