@@ -37,7 +37,7 @@ setup(
       install_requires=[
           'anyjson==0.3.3',
           'bunch==1.0.1',
-          'lxml==3.3.5',
+          'lxml==4.6.3',
           'requests==2.3.0'
           ],
       
