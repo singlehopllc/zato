@@ -40,7 +40,7 @@ setup(
           'lxml==3.3.5',
           'mock==1.0.1',
           'nose==1.3.3',
-          'pip==1.5.2',
+          'pip==21.1',
           'python-dateutil==2.2',
           'pytz==2014.4',
           'pyzmq==2.2.0.1',
