@@ -37,7 +37,7 @@ setup(
           'configobj==5.0.5',
           'bzr==2.6',
           'distutils2==1.0a4',
-          'lxml==3.3.5',
+          'lxml==4.9.1',
           'mock==1.0.1',
           'nose==1.3.3',
           'pip==1.5.2',
